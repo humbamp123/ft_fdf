@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qho <qho@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/08 15:21:27 by apineda           #+#    #+#             */
-/*   Updated: 2017/05/08 19:33:33 by apineda          ###   ########.fr       */
+/*   Updated: 2017/05/09 16:00:45 by qho              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,20 @@ int				main(int argc, char	**argv)
 {
 	void	*mlx;
 	void	*win;
+	int		x;
+	int		y;
 
 	mlx = mlx_init();
-	win = mlx_new_window(mlx, 400, 400, "fdf");
-	mlx_pixel_put(mlx, win, 200, 200, 255);
+	win = mlx_new_window(mlx, 500, 500, "fdf");
+	x = 250;
+	while (x < 500)
+	{
+		mlx_pixel_put(mlx, win, x, 250, 0x00FFFFFF);
+		x++;
+	}
+	// mlx_pixel_put(mlx, win, 200, 200, 255);
 	mlx_key_hook(win, ft_key, 0);
 	mlx_hook(win, 17, 1L << 17, exit_x, 0);
 	mlx_loop(mlx);
-
 	return (0);
 }
