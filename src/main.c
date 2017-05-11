@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qho <qho@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/08 15:21:27 by apineda           #+#    #+#             */
-/*   Updated: 2017/05/09 19:06:39 by qho              ###   ########.fr       */
+/*   Updated: 2017/05/10 12:26:45 by apineda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-static	int	ft_key(int keycode, void *param)
+static	int			ft_key(int keycode, void *param)
 {
 	ERR1(keycode == 53, exit(1), 0);
 	// ERR1(keycode == 49, space, 0);
@@ -31,26 +31,34 @@ static	int			exit_x(void *par)
 	return (0);
 }
 
+// static	int			ft_read_file(void)
+// {
 
+// }
 
-int				main(int argc, char	**argv)
+int					main(int argc, char	**argv)
 {
 	void	*mlx;
 	void	*win;
 	int		x;
 	int		y;
 
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 500, 500, "fdf");
-	x = 250;
-	while (x < 500)
+	if (argc == 2)
 	{
-		mlx_pixel_put(mlx, win, x, 250, 0x00FFFFFF);
-		x++;
+		mlx = mlx_init();
+		win = mlx_new_window(mlx, 500, 500, "fdf");
+		x = 250;
+		while (x < 500)
+		{
+			mlx_pixel_put(mlx, win, x, 250, 0x00FFFFFF);
+			x++;
+		}
+		// mlx_pixel_put(mlx, win, 200, 200, 255);
+		mlx_key_hook(win, ft_key, 0);
+		mlx_hook(win, 17, 1L << 17, exit_x, 0);
+		mlx_loop(mlx);
 	}
-	// mlx_pixel_put(mlx, win, 200, 200, 255);
-	mlx_key_hook(win, ft_key, 0);
-	mlx_hook(win, 17, 1L << 17, exit_x, 0);
-	mlx_loop(mlx);
+	else
+		ft_printf("it works, but your input doesn't");
 	return (0);
 }
