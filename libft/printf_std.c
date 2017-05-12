@@ -6,7 +6,7 @@
 /*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 15:42:08 by apineda           #+#    #+#             */
-/*   Updated: 2017/05/10 13:14:55 by apineda          ###   ########.fr       */
+/*   Updated: 2017/05/12 00:09:02 by apineda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,4 @@ char		*ft_to_upper(char *str)
 		i++;
 	}
 	return (str);
-}
-
-void	pl(char const *s)
-{
-	if (s)
-	{
-		write(1, s, ft_strlen(s));
-		write(1, "\n", 1);
-	}
 }

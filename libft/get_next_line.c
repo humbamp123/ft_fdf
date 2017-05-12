@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apineda <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 13:58:29 by apineda           #+#    #+#             */
-/*   Updated: 2017/02/21 13:08:35 by apineda          ###   ########.fr       */
+/*   Updated: 2017/05/12 00:06:22 by apineda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				get_next_line(const int fd, char **line)
 	static char	*saved = NULL;
 
 	ft_bzero((void *)buf, sizeof(char) * (BUFF_SIZE + 1));
-	if (!line || fd < 0 || read(fd, buf, 0) < 0)
+	if (!line || fd < 0 || read(fd, buf, 0) < 0 || BUFF_SIZE <= 0)
 		return (-1);
 	if (saved && (ft_line(line, NULL, &saved)))
 		return (1);

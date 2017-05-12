@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: exam <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/02 12:14:38 by exam              #+#    #+#             */
-/*   Updated: 2016/10/17 14:42:05 by apineda          ###   ########.fr       */
+/*   Updated: 2017/05/11 13:35:02 by apineda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdint.h>
 
-static int	ft_nbrlen(intmax_t num)
+int			ft_nbrlen(intmax_t num)
 {
 	int		flag;
 

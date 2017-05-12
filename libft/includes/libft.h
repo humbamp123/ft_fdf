@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apineda <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/21 11:21:43 by apineda           #+#    #+#             */
-/*   Updated: 2016/10/19 17:21:29 by apineda          ###   ########.fr       */
+/*   Updated: 2017/05/12 00:10:16 by apineda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,33 @@
 # include <limits.h>
 # include <stdio.h>
 # include <fcntl.h>
-# define HEX "0123456789ABCDEF"
+# include <stdarg.h>
+# include <stdint.h>
+# include "libprintf.h"
+
+# define G "\033[32;1m"
+# define Y "\033[33;1m"
+# define R "\033[31;1m"
+# define B "\033[34;1m"
+# define W "\033[0m"
+
+# ifndef ERRS
+#  define ERR(a, b) if(a){return(b);}
+#  define ERR1(a, b, c) if(a){b;return(c);}
+#  define ERR2(a, b, c, d) if(a){b;c;return(d);}
+#  define ERR3(a, b, c, d, e) if(a){b;c;d;return(e);}
+#  define ERR4(a, b, c, d, e, f) if(a){b;c;d;e;return(f);}
+# endif
+
+# ifndef ERWS
+#  define ERW(a,b,c) if(a){ft_putendl(c); return(b);}
+#  define ERW1(a,b,c,d) if(a){b;ft_putendl(d);return(c);}
+#  define ERW2(a,b,c,d,e) if(a){b;c;ft_putendl(e);return(d);}
+#  define ERW3(a,b,c,d,e,f) if(a){b;c;d;ft_putendl(f);return(e);}
+#  define ERW4(a,b,c,d,e,f,g) if(a){b;c;d;e;ft_putendl(g);return(f);}
+# endif
+
+# define HEX "0123456789abcdef"
 # define BUFF_SIZE 40
 
 typedef	struct		s_list
@@ -90,6 +116,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
+int					ft_nbrlen(intmax_t num);
 char				*ft_itoa_base(uintmax_t nbr, short base);
 
 /*
@@ -109,5 +136,6 @@ int					ft_absval(int num);
 int					ft_isupper(int c);
 int					ft_islower(int c);
 int					get_next_line(const int fd, char **line);
+void				ft_arraydel(char **as);
 
 #endif

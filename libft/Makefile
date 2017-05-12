@@ -30,7 +30,7 @@ FILENAMES_3 = ft_back_white.c ft_front_white.c ft_absval.c ft_lstnew.c \
 FILENAMES_4 = ft_printf.c printf_std.c vasprintf.c \
 			ft_printf_s.c ft_printf_d.c ft_printf_p.c ft_printf_u.c \
 			ft_printf_c.c ft_printf_o.c ft_printf_x.c ft_printf_flags.c \
-			ft_width.c ft_printf_per.c ft_printf_cap_s.c
+			ft_width.c ft_printf_per.c ft_printf_cap_s.c ft_arraydel.c
 
 CC = gcc
 AR = ar
@@ -54,31 +54,23 @@ INC = -I ./includes
 all: $(NAME)
 
 $(NAME): $(OBJECTS_1) $(OBJECTS_2) $(OBJECTS_3) $(OBJECTS_4)
-	$(AR) rc $@ $^
+	@$(AR) rc $@ $^
 	@ranlib $@
 
-build1:
-	@mkdir $@
-
-build2:
-	@mkdir $@
-
-build3:
-	@mkdir $@
-
-build4:
-	@mkdir $@
-
-build1/%.o: %.c | build1
+build1/%.o: %.c
+	@mkdir -p $(@D)
 	@$(CC) $(CCFLAGS) -c $^ -o $@ $(INC)
 
-build2/%.o: %.c | build2
+build2/%.o: %.c
+	@mkdir -p $(@D)
 	@$(CC) $(CCFLAGS) -c $^ -o $@ $(INC)
 
-build3/%.o: %.c | build3
+build3/%.o: %.c
+	@mkdir -p $(@D)
 	@$(CC) $(CCFLAGS) -c $^ -o $@ $(INC)
 
-build4/%.o: %.c | build4
+build4/%.o: %.c
+	@mkdir -p $(@D)
 	@$(CC) $(CCFLAGS) -c $^ -o $@ $(INC)
 
 clean:

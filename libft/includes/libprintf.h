@@ -6,37 +6,14 @@
 /*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/08 13:19:51 by apineda           #+#    #+#             */
-/*   Updated: 2017/04/05 20:24:29 by apineda          ###   ########.fr       */
+/*   Updated: 2017/05/12 00:09:11 by apineda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBPRINTF_H
 # define LIBPRINTF_H
 
-# include <stdarg.h>
-# include <string.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <limits.h>
-# include <stdio.h>
-# include <stdint.h>
-# define HEX "0123456789abcdef"
-
-# ifndef ERRS
-#  define ERR(a, b) while(1){if(a){return(b);}break;}
-#  define ERR1(a, b, c) while(1){if(a){b;return(c);}break;}
-#  define ERR2(a, b, c, d) while(1){if(a){b;c;return(d);}break;}
-#  define ERR3(a, b, c, d, e) while(1){if(a){b;c;d;return(e);}break;}
-#  define ERR4(a, b, c, d, e, f) while(1){if(a){b;c;d;e;return(f);}break;}
-# endif
-
-# ifndef ERWS
-#  define ERW(a,b,c) while(1){if(a){pl(c); return(b);}break;}
-#  define ERW1(a,b,c,d) while(1){if(a){b;pl(d);return(c);}break;}
-#  define ERW2(a,b,c,d,e) while(1){if(a){b;c;pl(e);return(d);}break;}
-#  define ERW3(a,b,c,d,e,f) while(1){if(a){b;c;d;pl(f);return(e);}break;}
-#  define ERW4(a,b,c,d,e,f,g) while(1){if(a){b;c;d;e;pl(g);return(f);}break;}
-# endif
+# include "libft.h"
 
 typedef	struct		s_flags
 {
@@ -75,7 +52,6 @@ char				*ft_appendit(t_print *ret, char *str);
 char				*ft_appender(char *ret, char *str);
 char				*ft_to_upper(char *str);
 
-void				pl(char const *s);
 void				*ft_memalloc(size_t size);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strcpy(char *dst, const char *src);
@@ -85,7 +61,6 @@ char				*ft_strdup(const char *s1);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
-int					ft_nbrlen(intmax_t num);
 char				*ft_itoa(intmax_t nbr);
 char				*ft_itoa_base(uintmax_t n, short base);
 void				ft_strdel(char **as);
