@@ -12,11 +12,15 @@
 
 #include "libft.h"
 
-void	ft_arraydel(char **as)
+void	ft_arraydel(char **ray)
 {
-	if (as)
+	char	**ar;
+
+	ar = ray;
+	if (ray)
 	{
-		while (*as)
-			ft_strdel(&*as++);
+		while (*ray)
+			ft_strdel(&*ray++);
+		free(ar);
 	}
 }

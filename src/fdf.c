@@ -6,132 +6,97 @@
 /*   By: apineda <apineda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/08 15:21:27 by apineda           #+#    #+#             */
-/*   Updated: 2017/05/12 00:29:10 by apineda          ###   ########.fr       */
+/*   Updated: 2017/05/19 14:46:31 by apineda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-static	int			ft_key(int keycode, void *param)
+int					ft_key(int keycode, void *param)
 {
 	ERR1(keycode == 53, exit(1), 0);
-	// ERR1(keycode == 49, space, 0);
-	// ERR1(keycode == 123, left, 0);
-	// ERR1(keycode == 124, right, 0);
-	// ERR1(keycode == 125, down, 0);
-	// ERR1(keycode == 126, up, 0);
 	return (0);
 }
 
-// static int	ft_mouse()
-static	int			exit_x(void *par)
+int					exit_x(void *par)
 {
 	par = NULL;
 	exit(1);
 	return (0);
 }
 
-static int			*ft_get_array_num(t_map *map, char **array)
+static	int			ft_read_file(t_map *map, char *arg)
 {
-	int		*ret;
-	int		i;
+	char		**array;
+	char		*str;
+	t_points	*list;
+	int			fd;
 
-	ret = (int *)ft_memalloc(sizeof(int) * map->col);
-	i = 0;
-	while (array[i])
-	{
-		ret[i] = ft_atoi(array[i]);
-		printf("NUM = %d", ret[i]);
-		i++;
-	}
-	printf("%d\n", i);
-	ft_strdel(array);
-	i = 0;
-	while (ret[i])
-	{
-		printf("NUM %d = %d", i, ret[i]);
-	}
-	return (ret);
-}
-
-static	int			ft_col_check(char **ary, int cols)
-{
-	int		count_cols;
-	int		i;
-
-	i = 0;
-	if (cols == 0)
-	{
-		while (ary[i])
-		{
-			cols++;
-			i++;
-		}
-		return (cols);
-	}
-	else
-	{
-		count_cols = 0;
-		while (ary[i])
-		{
-			count_cols++;
-			i++;
-		}
-		if (cols != count_cols)
-			return (-1);
-	}
-	return (0);
-}
-
-static	int			ft_read_file(t_map *map, int fd)
-{
-	char	**array;
-	char	*str;
-	int		*ints;
-	t_link	*list;
-
-	list = map->t;
-	str = ft_strnew(100);
+	str = NULL;
+	map->y_cnt = 1;
+	map->cnt = 0;
+	ERR((fd = open(arg, O_RDONLY)) < 0, -1);
+	map->t = (t_points *)ft_memalloc(sizeof(t_points) * map->mrow * map->mcol);
+	map->max = map->mrow > map->mcol ? map->mrow : map->mcol;
+	map->incr = 1200 / (map->max + 10);
+	map->size = 200 + map->incr * (map->max + 10);
 	while (get_next_line(fd, &str) > 0)
 	{
 		ERR((array = ft_strsplit(str, ' ')) == NULL, -1);
-		if (map->col == 0)
-		{
-			ERR((map->col = ft_col_check(array, map->col)) == -1, -1);
-		}
-		else
-			ERR1((ft_col_check(array, map->col)) < 0, ft_arraydel(array), -1);
-		ints = ft_get_array_num(map, array);
-		// list->row = ft_get_array_num(map, array);
-		// list = list->next;
+		ft_insert_row(map, list, array);
+		map->y_cnt++;
+		ft_arraydel(array);
 		ft_strdel(&str);
 	}
 	return (0);
 }
 
-// static	int				ft_put_map(t_map *map)
-// {
-
-
-// }
-
-int					main(int argc, char	**argv)
+static	int			ft_check_file(t_map *map, int fd)
 {
-	t_map	map;
-	int		fd;
+	char		**array;
+	char		*str;
 
-	if (argc == 2 && (fd = open(argv[1], O_RDONLY)) >= 0)	
+	str = NULL;
+	while (get_next_line(fd, &str) > 0)
 	{
+		ERR1((array = ft_strsplit(str, ' ')) == NULL || !*array,
+			ft_arraydel(array), -1);
+		if (map->mcol == 0)
+		{
+			ERR1((map->mcol = ft_col_check(array, map->mcol)) == -1,
+				ft_strdel(&str), -1);
+		}
+		else
+			ERR2((ft_col_check(array, map->mcol)) < 0, ft_arraydel(array),
+				ft_strdel(&str), -1);
+		map->mrow++;
+		ft_arraydel(array);
+		ft_strdel(&str);
+	}
+	return (0);
+}
+
+int					main(int argc, char **argv)
+{
+	t_map	*map;
+	char	*str;
+	int		fd;
+	int		i;
+
+	if (argc == 2 && (fd = open(argv[1], O_RDONLY)) >= 0)
+	{
+		ERW((str = ft_strstr(argv[1], ".fdf")) == 0 || ft_isalnum(str[4]), -1,
+			"Filename Error");
 		ft_bzero(&map, sizeof(map));
-		ERW(ft_read_file(&map, fd) == -1, -1, "Read Error");
-		// map.mlx = mlx_init();
-		// map.win = mlx_new_window(map.mlx, 500, 500, "fdf");
-		// // ft_put_map(map);
-		// mlx_key_hook(map.win, ft_key, 0);
-		// mlx_hook(map.win, 17, 1L << 17, exit_x, 0);
-		// mlx_loop(map.mlx);
+		map = (t_map *)ft_memalloc(sizeof(t_map));
+		ERW1(ft_check_file(map, fd) == -1 || !map->mcol, free(map), -1,
+			"File Format Error");
+		ERW1(ft_read_file(map, argv[1]) == -1, free(map), -1, "Read Error");
+		ft_put_map(map);
+		ERR4(map, free(map->t), free(map->win), free(map->mlx), free(map), 0);
+		close(fd);
 	}
 	else
-		ft_printf("it works, but your input doesn't");
+		ft_printf("usage ./fdf <map.fdf>\n");
 	return (0);
 }
